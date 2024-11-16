@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_cross_binary")
+
+go_binary(
+    name = "go_program",
+    srcs = ["main.go"],
+    visibility = ["//visibility:public"],
+)
+
+go_cross_binary(
+    name = "go_program_cross",  
+    target = ":go_program",
+    platform= "@rules_go//go/toolchain:darwin_arm64",
+    visibility = ["//visibility:public"],
+)

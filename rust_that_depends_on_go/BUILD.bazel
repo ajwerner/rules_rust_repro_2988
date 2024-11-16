@@ -1,0 +1,26 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "rust_lib",
+    srcs = [
+        "src/lib.rs",
+    ],
+    data = [
+        "//go_program:go_program_cross",
+    ],
+    rustc_env = {
+        "GO_PROGRAM": "$(rlocationpath //go_program:go_program_cross)",
+    },
+    visibility = ["//visibility:public"],
+    deps = [
+        "@rules_rust//tools/runfiles",
+    ],
+)
+
+rust_test(
+    name = "rust_lib_test",
+    srcs = ["tests/test.rs"],
+    deps = [
+        ":rust_lib",
+    ],
+)
